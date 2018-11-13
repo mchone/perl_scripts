@@ -1,0 +1,4 @@
+1. 使用前需先下载http://db.ncgr.ac.cn/RicePanGenome/中67个fa.gz序列文件
+2. 该脚本用于提取与提交fasta文档序列相似的67个黄学辉实验室PanGenomes水稻基因组序列
+3. 使用前需先修改pbs文档中“OsP2_ref.fa”，替换为对应待提取文件
+4. 结果文档为final.fa

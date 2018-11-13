@@ -1,0 +1,72 @@
+#!/bin/bash
+#PBS -N seq_pick
+#PBS -l nodes=1:ppn=1
+#PBS -l walltime=480:00:030
+#PBS -e errlog_seq_pick
+#PBS -q high
+
+cd $PBS_O_WORKDIR
+
+pt=`ls *.fa.gz`
+
+for i in ${pt}
+do
+gunzip ${i}
+k=`echo ${i} | cut -d \. -f 1`
+./formatdb -i ${k}.fa -t ${k} -p F
+./blastall -p blastn -d "${k}.fa" -i OsP2_ref.fa -o ${k}.result -m 9 -e 1e-200
+rm ${k}.fa.n*
+rm formatdb.log
+
+sq=`cat ${k}.result |grep -v "#" |head -n 1|cut -f 2`
+st=(`grep "${sq}" ${k}.result |cut -f 9`)
+ed=(`grep "${sq}" ${k}.result |cut -f 10`)
+
+if [ ${st[0]} -lt ${ed[0]} ]
+   then
+   min=${st[0]}
+   for i in ${st[@]}
+   do 
+     if [ ${i} -lt ${min} ]
+     then
+       min=${i}
+     fi
+   done
+   max=${ed[0]}
+   for i in ${ed[@]}
+   do
+     if [ ${i} -gt ${max} ]
+     then
+       max=${i}
+     fi
+   done
+start=${min}
+end=${max}
+else
+   max=${st[0]}
+   for i in ${st[@]}
+   do
+     if [ ${i} -gt ${max} ]
+     then
+       max=${i}
+     fi
+   done
+   min=${ed[0]}
+   for i in ${ed[@]}
+   do
+     if [ ${i} -lt ${min} ]
+     then
+       min=${i}
+     fi
+   done
+start=${max}
+end=${min}
+fi
+
+perl seq_pick.pl ${k}.fa ${sq} ${start} ${end} OsP2_ref_${k}.fa 
+gzip ${k}.fa
+cat OsP2_ref_${k}.fa >> final.fa
+done
+
+rm homo.o*
+rm errlog_homo
