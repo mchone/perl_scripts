@@ -1,0 +1,10 @@
+#!bin/sh
+./blastall -p blastn -d "DSC.contig_300.fa" -i All-Unigene0.fa -o result0 -e 0.0000000001 &
+./blastall -p blastn -d "DSC.contig_300.fa" -i All-Unigene1.fa -o result1 -e 0.0000000001 &
+./blastall -p blastn -d "DSC.contig_300.fa" -i All-Unigene2.fa -o result2 -e 0.0000000001 &
+./blastall -p blastn -d "DSC.contig_300.fa" -i All-Unigene3.fa -o result3 -e 0.0000000001 &
+./blastall -p blastn -d "DSC.contig_300.fa" -i All-Unigene4.fa -o result4 -e 0.0000000001 &
+./blastall -p blastn -d "DSC.contig_300.fa" -i All-Unigene5.fa -o result5 -e 0.0000000001 &
+./blastall -p blastn -d "DSC.contig_300.fa" -i All-Unigene6.fa -o result6 -e 0.0000000001 &
+./blastall -p blastn -d "DSC.contig_300.fa" -i All-Unigene7.fa -o result7 -e 0.0000000001 &
+./blastall -p blastn -d "DSC.contig_300.fa" -i All-Unigene8.fa -o result8 -e 0.0000000001 &
